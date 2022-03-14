@@ -19,10 +19,10 @@
             <a class="nav-item nav-link" href="">Aprovado</a>
             <a class="nav-item nav-link" href="">Entregue</a>
        </div>
-        <button href="/pedido/formulario" class="btn btn-secondary">Novo</button>
+        <a href="/pedido/formulario"> <button class="btn btn-secondary">Novo</button></a>
     </nav>
 
-    <div class="card" th:each="pedido : ${pedidos}">
+    <div class="card mb-3" th:each="pedido : ${pedidos}">
         <div class="card-header" th:text="${pedido.nomeProduto}">Nome do Produto</div>
 
 
