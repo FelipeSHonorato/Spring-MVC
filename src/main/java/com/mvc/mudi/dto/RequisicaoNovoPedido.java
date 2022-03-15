@@ -2,11 +2,24 @@ package com.mvc.mudi.dto;
 
 import com.mvc.mudi.model.Pedido;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+
 public class RequisicaoNovoPedido {
 
+    //@NotBlank informa que esse atributo no formulário não pode ficar em branco, será utilizado no controller para criar um erro para o usuário
+    //@Min é a quantidade mínima de caracteres que o nome pode conter e @Max éo inverso
+
+    @NotBlank @Min(3) @Max(50)
     private String nomeProduto;
+
+    @NotBlank
     private String urlProduto;
+
+    @NotBlank
     private String urlImagem;
+
     private String descricao;
 
     public String getNomeProduto() {
@@ -51,4 +64,6 @@ public class RequisicaoNovoPedido {
 
         return  pedido;
     }
+
+
 }
