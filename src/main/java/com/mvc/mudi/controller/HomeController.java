@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Locale;
 
@@ -22,10 +23,10 @@ public class HomeController {
     private PedidoRepository pedidoRepository;
 
     @GetMapping //Anotação para informar onde será efetuado o método GET de requisição do browser
-    public String home(Model model){
-        List<Pedido> pedidos = pedidoRepository.findAll();
+    public String home(Model model, Principal principal){
+        List<Pedido> pedidos = pedidoRepository.findAllByUsuario(principal.getName());
         model.addAttribute("pedidos", pedidos);
-        return "home";
+        return "/home";
     }
 
     @GetMapping("/{status}") //Anotação para informar onde será efetuado o método GET de requisição do browser
@@ -33,7 +34,7 @@ public class HomeController {
         List<Pedido> pedidos = pedidoRepository.findByStatus(StatusPedido.valueOf(status.toUpperCase(Locale.ROOT)));
         model.addAttribute("pedidos", pedidos);
         model.addAttribute("status", status);
-        return "home";
+        return "/home";
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
