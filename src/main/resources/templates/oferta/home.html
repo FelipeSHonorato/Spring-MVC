@@ -1,56 +1,71 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html>
 
 <!-- Utilizamos replace para informar ao html que existe um, no caso head, que é utilizado em outras páginas -->
+
 <head th:replace="~{base :: head}"></head>
 
-<body>
+<body onLoad="onLoad()">
 
-<div th:replace="~{base :: logo}"></div>
+    <div th:replace="~{base :: logo}"></div>
 
-<div class="container">
+    <div class="container" id="ofertas">
 
-    <div th:replace="~{base :: titulo ('Últimos Pedidos Entregues')}"></div>
-    <div class="mb-3"></div>
-    <div class="card mb-3" th:each="pedido : ${pedidos}">
+        <div th:replace="~{base :: titulo ('Faça sua oferta')}"></div>
+
+        <div class="mb-3"></div>
+
+        <div class="card mb-3" v-for="pedido in pedidos">
 
 
-        <div class="card-header alert-dark" th:text="${pedido.nomeProduto}">Nome do Produto</div>
+            <div class="card-header alert-dark">{{pedido.nomeProduto}}</div>
 
-        <div class="card-body">
-            <div class="row">
-                <div class="col-12 col-sm-8 mb-3">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 col-sm-8 mb-3">
 
-                    <div class="row">
-                        <div class="col-md-5" >Valor:
-                            <span  th:if="${pedido.valorNegociado} != null" th:text="${'R$ ' + #numbers.formatDecimal(pedido.valorNegociado,1,'POINT',2,'COMMA')}">200,99</span>
-                            <!-- Processo para formatar a saída para reais com o Thymeleaf-->
+                        <div class="row">
+                            <div class="col-md-5">Valor: <input /></div>
+                            <div class="col-md-7">Data da entrega: <input /></div>
                         </div>
 
-                        <div class="col-md-7">Data da entrega:
-                            <span th:text="${#temporals.format(pedido.dataDaEntrega,'dd/MM/yyyy')}">10/02/2020</span>
-                            <!-- Processo para formatar a saída para data com o Thymeleaf-->
-                        </div>
+                        <div>Produto</div>
+                        <div><a v-bind:href="pedido.urlProduto">{{pedido.nomeProduto}}</a></div>
+
+                        <div>Descrição</div>
+                        <div><textarea class="form-control">{{pedido.descricao}}</textarea></div>
                     </div>
 
-                    <div>Produto</div>
-                    <div>
-                        <input class="form-control" th:value="${pedido.urlProduto}" value="url do produto"/>
+                    <div class="col-12 col-sm-4">
+                        <div><img class="img-thumbnail" v-bind:src="pedido.urlImagem" /></div>
                     </div>
-
-                    <div>Descrição</div>
-
-                    <div>
-                        <textarea class="form-control" th:text="${pedido.descricao}">descrição do pedido</textarea>
-                    </div>
-                </div>
-
-                <div class="col-12 col-sm-4">
-                    <div> <img class="img-thumbnail" th:src="${pedido.urlImagem}" src=""/></div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+    <script>
+
+        function onLoad() {
+            var app = new Vue({
+                el: '#ofertas', data: {
+                    pedidos: [
+                    {
+                        "id": 11,
+                        "nomeProduto": "The Last of Us Part II - PS 4",
+                        "valorNegociado": null,
+                        "dataDaEntrega": null,
+                        "urlProduto": "https://www.amazon.com.br/Last-Us-Part-II-PlayStation/dp/B07ZGFHZVZ/ref=pd_vtp_3/140-8605894-8727366?pd_rd_w=0CI3m&pf_rd_p=b0211198-d972-4c79-9e55-59ac15cbe27a&pf_rd_r=NB8THQZ5X35P7JEKCAEZ&pd_rd_r=5a184a5f-3f0b-4526-9148-1ad9bb41b1e2&pd_rd_wg=KSeCd&pd_rd_i=B07ZGFHZVZ&psc=1",
+                        "urlImagem": "https://m.media-amazon.com/images/I/61OZeW+pPYL._AC_SX522_.jpg",
+                        "descricao": "Cinco anos depois da jornada perigosa pelos Estados Unidos pós-pandêmicos, Ellie e Joel se estabelecem em Jackson, Wyoming. A vida em uma próspera comunidade de sobreviventes lhes trouxe paz e estabilidade, apesar da ameaça constante dos infectados e de outros sobreviventes mais desesperados. Quando um evento violento interrompe essa paz, Ellie embarca em uma jornada implacável para fazer justiça e encontrar uma solução. Enquanto vai atrás de cada um dos responsáveis, ela se confronta com as repercussões físicas e emocionais devastadoras de suas ações. Uma história complexa e emocionante Vivencie os conflitos morais cada vez maiores criados pela busca implacável de Ellie por vingança. O ciclo de violência deixado em seu caminho desafiará suas noções de certo ou errado, bem ou mal e herói ou vilão. Um mundo belo, mas perigoso Embarque na jornada de Ellie, levando-a das montanhas e florestas tranquilas de Jackson até as ruínas exuberantes e cobertas pela vegetação da área metropolitana de Seattle. Encontre novos grupos de sobreviventes, ambientes desconhecidos e traiçoeiros e evoluções terríveis dos infectados. ",
+                        "status": "AGUARDANDO"
+                    }
+                    ]
+                }
+            });
+        }
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </body>
+
 </html>
