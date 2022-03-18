@@ -2,6 +2,8 @@ package com.mvc.mudi.dto;
 
 import com.mvc.mudi.model.Oferta;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -10,8 +12,17 @@ public class RequisicaoNovaOferta {
 
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
+
     private Long pedidoId;
+
+   /** Pattern utilizado para aplicação de validadores para entrada no atributo, no caso é para monetização -> ^ = entrada em digito , \\d = será digito e \\d{2} = será 2 digitos
+    no caso abaixo é inserido um PONTO para delimitar as casas decimais e entre parenteses e ? = para indicar que talvez não seja inserido esse valor pós ponto**/
+    @Pattern (regexp = "^\\d+(\\.\\d{2})?$")
+    @NotNull
     private String valor;
+
+    @Pattern (regexp = "^\\d{2}/\\d{2}/\\d{4}$")
+    @NotNull
     private String dataDaEntrega;
     private String comentario;
 
