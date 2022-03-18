@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <!-- Utilizamos replace para informar ao html que existe um, no caso head, que é utilizado em outras páginas -->
 
@@ -16,7 +16,6 @@
         <div class="mb-3"></div>
 
         <div class="card mb-3" v-for="pedido in pedidos">
-
 
             <div class="card-header alert-dark">{{pedido.nomeProduto}}</div>
 
@@ -48,24 +47,21 @@
         function onLoad() {
             var app = new Vue({
                 el: '#ofertas', data: {
-                    pedidos: [
-                    {
-                        "id": 11,
-                        "nomeProduto": "The Last of Us Part II - PS 4",
-                        "valorNegociado": null,
-                        "dataDaEntrega": null,
-                        "urlProduto": "https://www.amazon.com.br/Last-Us-Part-II-PlayStation/dp/B07ZGFHZVZ/ref=pd_vtp_3/140-8605894-8727366?pd_rd_w=0CI3m&pf_rd_p=b0211198-d972-4c79-9e55-59ac15cbe27a&pf_rd_r=NB8THQZ5X35P7JEKCAEZ&pd_rd_r=5a184a5f-3f0b-4526-9148-1ad9bb41b1e2&pd_rd_wg=KSeCd&pd_rd_i=B07ZGFHZVZ&psc=1",
-                        "urlImagem": "https://m.media-amazon.com/images/I/61OZeW+pPYL._AC_SX522_.jpg",
-                        "descricao": "Cinco anos depois da jornada perigosa pelos Estados Unidos pós-pandêmicos, Ellie e Joel se estabelecem em Jackson, Wyoming. A vida em uma próspera comunidade de sobreviventes lhes trouxe paz e estabilidade, apesar da ameaça constante dos infectados e de outros sobreviventes mais desesperados. Quando um evento violento interrompe essa paz, Ellie embarca em uma jornada implacável para fazer justiça e encontrar uma solução. Enquanto vai atrás de cada um dos responsáveis, ela se confronta com as repercussões físicas e emocionais devastadoras de suas ações. Uma história complexa e emocionante Vivencie os conflitos morais cada vez maiores criados pela busca implacável de Ellie por vingança. O ciclo de violência deixado em seu caminho desafiará suas noções de certo ou errado, bem ou mal e herói ou vilão. Um mundo belo, mas perigoso Embarque na jornada de Ellie, levando-a das montanhas e florestas tranquilas de Jackson até as ruínas exuberantes e cobertas pela vegetação da área metropolitana de Seattle. Encontre novos grupos de sobreviventes, ambientes desconhecidos e traiçoeiros e evoluções terríveis dos infectados. ",
-                        "status": "AGUARDANDO"
-                    }
-                    ]
-                }
+                    pedidos: []
+                },
+                mounted() {
+                    axios
+                        .get('http://localhost:8080/api/pedidos/aguardando')
+                        .then(response => (this.pedidos = response.data))
+                },
             });
         }
 
     </script>
+    <!-- Script para incrementar o Vue no código -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- Script para incrementar o Axios no código -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </body>
 
 </html>

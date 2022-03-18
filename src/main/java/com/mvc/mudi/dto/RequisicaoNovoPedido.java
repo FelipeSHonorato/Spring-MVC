@@ -3,8 +3,6 @@ package com.mvc.mudi.dto;
 import com.mvc.mudi.model.Pedido;
 import com.mvc.mudi.model.StatusPedido;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 public class RequisicaoNovoPedido {
